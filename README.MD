@@ -37,3 +37,4 @@ Make Tarkov Great Again is a project founded by a few Altered Escape developers.
 Feel free to create a fork, open a pull request, and request a review: **We are open to any contribution!**
 
 **To keep your fork up-to-date, we recommend using Pull!**
+<p align="center"><img src = "https://user-images.githubusercontent.com/21200584/183050357-6c92f1cd-68ca-4f74-b41d-1706915c67cf.gif"></p>
