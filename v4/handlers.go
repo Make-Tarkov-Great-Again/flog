@@ -1,4 +1,4 @@
-package flog
+package v4
 
 import (
 	"fmt"
