@@ -34,7 +34,12 @@ go get github.com/Make-Tarkov-Great-Again/flog/v4@latest
 ```
 then import where needed
 
+```go
+import "github.com/Make-Tarkov-Great-Again/flog/v4/flog"
 
+// inside func
+flog.Info("Hello", "from flog")
+```
 ## Known issues
 
 Working on it...
