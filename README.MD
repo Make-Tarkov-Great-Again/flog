@@ -1,5 +1,6 @@
 # FLog - A Simple Farmers Logger
 
+
 FLog is a straightforward logger for Go that keeps things simple, just like logging should be.
 
 ### Features:
@@ -8,7 +9,11 @@ FLog is a straightforward logger for Go that keeps things simple, just like logg
 - Avoids unnecessary complexity, focusing on clean and manageable logs.
 - Built to "Make Loggers Great Again."
 
-
+## Upcoming features
+- Log rotation
+- Log Sanitization
+- Level filtering
+- Configs for all above
 
 
 ## Usage
@@ -19,6 +24,15 @@ FLog is a straightforward logger for Go that keeps things simple, just like logg
 ! Right now this is a prototype, a proof of concept. i would not advise using this in production!
 ```
 seriously its not ready lol
+
+### Installing
+
+```go
+go get github.com/Make-Tarkov-Great-Again/flog/v4@latest
+```
+then import where needed
+
+
 ## Known issues
 
 Working on it...
