@@ -32,7 +32,7 @@ seriously its not ready lol
 ### Installing
 
 ```go
-go get github.com/Make-Tarkov-Great-Again/flog/v4@latest
+go get github.com/Make-Tarkov-Great-Again/flog/v4/flog@latest
 ```
 then import where needed
 
