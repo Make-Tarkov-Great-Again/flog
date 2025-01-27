@@ -92,6 +92,14 @@ func formatlog(format string, data ...any) string {
 	return result
 }
 
+/*
+Internal function that prepares formatted messages:
+
+Does:
+  - Converts arguments to strings
+  - Handles format strings if present
+  - Joins multiple arguments with spaces
+*/
 func (l *Logger) prepare(data ...any) string {
 	if len(data) == 0 {
 		return ""
@@ -172,4 +180,13 @@ func (l *Logger) Debug(data ...any) {
 		message := logger.prepare(data...)
 		l.log(LogWarn, message)
 	}
+}
+
+func AnsiRGB(rgb RGB) Color {
+	s := "\x1b[38;2;" + strconv.FormatInt(int64(rgb.R), 10) + ";" + strconv.FormatInt(int64(rgb.G), 10) + ";" + strconv.FormatInt(int64(rgb.B), 10) + "m"
+	return Color(s)
+}
+
+func (c Color) Set(in Color) {
+	c = in
 }

@@ -15,9 +15,15 @@ import (
 // Buffered writers for each log file
 var logger *Logger = nil
 
-// Call at the start of your programs execution with a Config struct to initialize the logger.
-//
-// Afterwords you can then call Flog.Info or any other thing like you do with fmt.println
+/*
+Initializes the logging system with the provided configuration. Must be called before any logging operations.
+
+Does the following:
+  - Creates necessary directories
+  - Sets up log files
+  - Initializes color mapping
+  - Starts periodic flush routine
+*/
 func Init(config Config) {
 	//defer measurment.Un(measurment.Trace("init"))
 
@@ -125,6 +131,14 @@ var (
 	callerMu    sync.RWMutex
 )
 
+/*
+Internal function that retrieves information about the calling function:
+
+Explanation:
+  - Uses runtime.Caller to get call stack information
+  - Implements caching for better performance
+  - Returns CallerInfo with function name and line number
+*/
 func getCallerInfo(skip int) CallerInfo {
 	//defer measurment.Un(measurment.Trace("Get caller info"))
 
@@ -215,6 +229,20 @@ func (l *Logger) log(logType LogLevel, message string, args ...interface{}) {
 
 // Cleanup function to be called when shutting down
 func (l *Logger) Cleanup() {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+
+	for _, writer := range l.logFileMap {
+		writer.Flush()
+	}
+
+	for _, file := range l.files {
+		file.Close()
+	}
+}
+
+func Cleanup() {
+	l := logger
 	l.mu.Lock()
 	defer l.mu.Unlock()
 
