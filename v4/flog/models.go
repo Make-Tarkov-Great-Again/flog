@@ -76,14 +76,3 @@ type RGB struct {
 	G int `json:"G"`
 	B int `json:"B"`
 }
-
-/*
-Converts RGB color values to ANSI escape sequences for console output:
-
-  - Takes RGB struct as input
-  - Returns ANSI escape sequence string
-
-Example:
-
-	AnsiRGB(RGB{R: 255, G: 0, B: 0}) // returns red color code
-*/
