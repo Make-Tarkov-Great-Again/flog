@@ -190,3 +190,7 @@ func AnsiRGB(rgb RGB) Color {
 func (c Color) Set(in Color) {
 	c = in
 }
+
+func (c Color) Get() Color {
+	return c
+}

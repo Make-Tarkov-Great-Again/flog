@@ -44,7 +44,7 @@ func Init(config Config) {
 		config.LogFolder = filepath.Join(folder, "FLog") //Default ot FLog
 	}
 
-	colorMap = map[LogLevel]string{
+	colorMap = map[LogLevel]Color{
 		LogError:   config.Colors.LogError,
 		LogWarn:    config.Colors.LogWarn,
 		LogInfo:    config.Colors.LogInfo,

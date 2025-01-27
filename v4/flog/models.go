@@ -28,7 +28,7 @@ var logFolder string
 
 type Color string
 
-var colorMap = make(map[LogLevel]string)
+var colorMap = make(map[LogLevel]Color)
 
 type Logger struct {
 	Config     Config                   //Current logger configuration
@@ -62,14 +62,6 @@ func (co Colors) Default() Colors {
 	co.LogSuccess = AnsiRGB(RGB{R: 1, G: 235, B: 110})
 	return co
 }
-
-//func (co Colors) Default() {
-//	co.LogError = hexToAnsi("#EA0101")
-//	co.LogWarn = hexToAnsi("#EAAD01")
-//	co.LogInfo = hexToAnsi("#0056EA")
-//	co.LogSuccess = hexToAnsi("#01EB6E")
-//
-//}
 
 type RGB struct {
 	R int `json:"R"`
