@@ -7,9 +7,10 @@ import (
 	"sync"
 )
 
+// CallerInfo is used internally to store function caller information for log messages.
 type CallerInfo struct {
-	funcName string
-	line     int
+	funcName string // Name of the calling function
+	line     int    // Line number in the source file
 }
 
 const (
@@ -29,20 +30,20 @@ var logFolder string
 var colorMap = make(map[LogLevel]string)
 
 type Logger struct {
-	Config     Config
-	logFolder  string
-	logFileMap map[string]*bufio.Writer
-	files      map[string]*os.File
-	mu         sync.Mutex
-	bufPool    sync.Pool
+	Config     Config                   //Current logger configuration
+	logFolder  string                   //Base directory for log files. Appends a log folder automaticly to the path
+	logFileMap map[string]*bufio.Writer //Map of buffered writers for each log level
+	files      map[string]*os.File      //Map of open file handles
+	mu         sync.Mutex               //Mutex for thread-safe operations
+	bufPool    sync.Pool                //Pool of string builders for efficient string operations
 }
 
 type Config struct {
-	LogFolder     string
-	Colors        Colors `json:"colors,omitempty"`
-	LogConsole    bool
-	LogFilePrefix string
-	FormatPrefix  string //Defaults to !
+	LogFolder     string // Base folder for log files
+	Colors        Colors // Color configuration for console output
+	LogConsole    bool   // Enable/disable console logging
+	LogFilePrefix string // Prefix for log files
+	FormatPrefix  string // Prefix for format specifiers (default: "!")
 }
 
 type Colors struct {
@@ -75,7 +76,16 @@ type RGB struct {
 	B int `json:"B"`
 }
 
-// AnsiRGB creates a new ansi escape code based on an RGB input
+/*
+Converts RGB color values to ANSI escape sequences for console output:
+
+  - Takes RGB struct as input
+  - Returns ANSI escape sequence string
+
+Example:
+
+	AnsiRGB(RGB{R: 255, G: 0, B: 0}) // returns red color code
+*/
 func AnsiRGB(rgb RGB) string {
 	s := "\x1b[38;2;" + strconv.FormatInt(int64(rgb.R), 10) + ";" + strconv.FormatInt(int64(rgb.G), 10) + ";" + strconv.FormatInt(int64(rgb.B), 10) + "m"
 	return s

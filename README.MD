@@ -6,9 +6,13 @@
 FLog is a straightforward logger for Go that keeps things simple, just like logging should be.
 
 ### Features:
-- Writes logs to files, neatly separated by category, so you can stay organized.
-- All logs are timestamped, and include where it was called from 
-- Avoids unnecessary complexity, focusing on clean and manageable logs.
+- Multiple log levels (Error, Warn, Info, Debug, Success)
+- Color-coded console output
+- Concurrent file logging with buffered writes
+- Automatic log file rotation
+- Silent logging option
+- Caller information tracking
+- Formatted logging support
 - Built to "Make Loggers Great Again."
 
 
@@ -29,19 +33,26 @@ FLog is a straightforward logger for Go that keeps things simple, just like logg
 ```
 seriously its not ready lol
 
+
+## Quick Start
+
 ### Installing
 
 ```go
 go get github.com/Make-Tarkov-Great-Again/flog/v4/flog@latest
 ```
-then import where needed
+### Basic Usage
 
 ```go
+// Basic logging
 import "github.com/Make-Tarkov-Great-Again/flog/v4/flog"
 
-// inside func
-flog.Info("Hello", "from flog")
+...
+flog.Init(flog.Default()) // Initialize the logger with default settings (Fastest)
+flog.Info("Starting application...")
+flog.Error("An error occurred:", err)
 ```
+
 ## Known issues
 
 Working on it...
@@ -53,7 +64,7 @@ Make Tarkov Great Again is a project founded by a few Altered Escape developers.
 
 ## Contribution
 
-- Is there a part of the launcher you want to tackle?
+- Is there a part of FLog you want to tackle?
 - Some code you would like to refactor?
 - Got an idea you would like to share/implement?
 

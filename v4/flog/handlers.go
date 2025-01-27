@@ -92,6 +92,14 @@ func formatlog(format string, data ...any) string {
 	return result
 }
 
+/*
+Internal function that prepares formatted messages:
+
+Does:
+  - Converts arguments to strings
+  - Handles format strings if present
+  - Joins multiple arguments with spaces
+*/
 func (l *Logger) prepare(data ...any) string {
 	if len(data) == 0 {
 		return ""
