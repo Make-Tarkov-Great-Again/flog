@@ -71,7 +71,7 @@ func GetConfig() Config {
 }
 
 func SetConfig(config Config) {
-	logger.Config = config
+	Init(config)
 }
 
 func (l *Logger) initLogFiles() error {
