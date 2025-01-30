@@ -13,6 +13,7 @@ type CallerInfo struct {
 }
 
 const (
+	LogPanic   LogLevel = "panic"   //A panic with pitch red text that go cannot recover from
 	LogError   LogLevel = "error"   //A error warning with red text to stand out
 	LogWarn    LogLevel = "warn"    // A non-fatal error that Go can recover from
 	LogInfo    LogLevel = "info"    // Normal log
@@ -48,6 +49,7 @@ type Config struct {
 }
 
 type Colors struct {
+	LogPanic   Color `json:"log_panic,omitempty"`
 	LogError   Color `json:"log_error,omitempty"`
 	LogWarn    Color `json:"log_warn,omitempty"`
 	LogInfo    Color `json:"log_info,omitempty"`
@@ -56,6 +58,8 @@ type Colors struct {
 }
 
 func (co Colors) Default() Colors {
+	co.LogError = AnsiRGB(RGB{R: 234, G: 1, B: 1})
+	co.LogPanic = AnsiRGB(RGB{R: 255, G: 0, B: 0})
 	co.LogError = AnsiRGB(RGB{R: 234, G: 1, B: 1})
 	co.LogWarn = AnsiRGB(RGB{R: 234, G: 173, B: 1})
 	co.LogInfo = AnsiRGB(RGB{R: 0, G: 86, B: 234})

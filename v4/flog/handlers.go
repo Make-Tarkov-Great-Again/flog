@@ -24,6 +24,24 @@ func InfoF(format string, data ...any) {
 	}
 }
 
+func Panic(data ...any) {
+	if logger != nil {
+		message := logger.prepare(data...)
+		msg := logger.format(LogPanic, message)
+		panic(msg)
+	}
+}
+
+func PanicF(format string, data ...any) {
+	if logger != nil {
+		message := formatlog(format, data...)
+		logger.log(LogError, message)
+		msg := logger.format(LogPanic, message)
+		panic(msg)
+
+	}
+}
+
 // SInfo is a silent info log
 func SInfo(data ...any) {
 	if logger != nil {
@@ -63,6 +81,11 @@ func (l *Logger) SInfo(data ...any) {
 		logger.log(LogInfo, message, true)
 	}
 }
+
+func Format(format string, data ...any) string {
+	return formatlog(format, data...)
+}
+
 func formatlog(format string, data ...any) string {
 	// If no formatting needed or no data, return original
 	if !strings.Contains(format, logger.Config.FormatPrefix) || len(data) == 0 {

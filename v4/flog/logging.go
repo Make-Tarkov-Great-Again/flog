@@ -212,8 +212,15 @@ func (l *Logger) log(logType LogLevel, message string, args ...interface{}) {
 
 	// Write to console if not silent
 	if !silentLogging && l.Config.LogConsole {
+		var logTypeColor Color
 		logTypePrefix := fmt.Sprintf("[%s]", strings.ToUpper(string(logType)))
-		logTypeColor := colorMap[logType]
+
+		if logType == LogPanic {
+			logTypeColor = colorMap[LogError]
+		} else {
+			logTypeColor = colorMap[logType]
+
+		}
 
 		//fmt.Printf("%s%s %s%s",
 		//	logTypeColor,
@@ -225,6 +232,52 @@ func (l *Logger) log(logType LogLevel, message string, args ...interface{}) {
 
 		_, _ = os.Stdout.WriteString(st)
 	}
+}
+
+func (l *Logger) format(logType LogLevel, message string, args ...interface{}) string {
+	// Get string builder from pool
+	builder := l.bufPool.Get().(*strings.Builder)
+	builder.Reset()
+	defer l.bufPool.Put(builder)
+
+	// Get caller information
+	caller := getCallerInfo(3)
+
+	// Format the message
+	formattedMsg := fmt.Sprintf(message, args...)
+	timestamp := l.logDating()
+
+	// Build the log entry
+	builder.WriteString("[")
+	builder.WriteString(timestamp)
+	builder.WriteString("] [")
+	builder.WriteString(caller.funcName)
+	builder.WriteString(" → ")
+	builder.WriteString(fmt.Sprint(caller.line))
+	builder.WriteString("]: ")
+	builder.WriteString(formattedMsg)
+	builder.WriteString("\n")
+
+	logEntry := builder.String()
+
+	// Write to the log file
+	l.mu.Lock()
+
+	var logTypeThing LogLevel
+
+	if logType == LogPanic {
+		logTypeThing = LogError
+	} else {
+		logTypeThing = logType
+	}
+
+	if writer, exists := l.logFileMap[string(logTypeThing)]; exists {
+		writer.WriteString(logEntry)
+	}
+	l.mu.Unlock()
+
+	// Return the formatted log entry
+	return logEntry
 }
 
 // Cleanup function to be called when shutting down
