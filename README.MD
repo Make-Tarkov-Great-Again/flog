@@ -3,7 +3,7 @@
 
 <p align="center"><img src = "/assets/example.png"></p>
 
-FLog is a straightforward logger for Go that keeps things simple, just like logging should be.
+FLog is a straightforward logger for Go that keeps things simple, just like logging should be. This is a fork of FLog, The GlobalBans logger, full up to date one can be found at https://github.com/GlobalBans-Authority/FLog
 
 ### Features:
 - Multiple log levels (Error, Warn, Info, Debug, Success)
